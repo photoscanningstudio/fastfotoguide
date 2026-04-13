@@ -859,7 +859,7 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#"><span>Fast</span>FotoGuide</a>
+    <a class="nav-logo" href="index.html"><span>Fast</span>FotoGuide</a>
     <ul class="nav-links">
       <li><a href="#review">Review</a></li>
       <li><a href="#features">Features</a></li>
@@ -1098,51 +1098,16 @@
     </div>
   </section>
 
-  <!-- BLOG / GUIDE SECTION -->
+  <!-- BLOG / GUIDE SECTION — rotates 1 post per week via JS -->
   <section id="blog">
     <div class="section-label">Guides &amp; Resources</div>
     <h2 class="section-title">Everything You Need to Know</h2>
-    <p class="section-intro">We've done the research so you don't have to. Deep guides on getting the most from your photo digitization project.</p>
-    <div class="blog-grid">
-      <div class="blog-card reveal">
-        <div class="blog-img">📸</div>
-        <div class="blog-content">
-          <p class="blog-tag">Complete Guide</p>
-          <h3>How to Digitize 1,000 Old Photos Without Losing Your Mind</h3>
-          <p>A step-by-step system for sorting, scanning, naming, and backing up an entire lifetime of photo prints — in a single weekend.</p>
-          <a href="#">Read the Guide →</a>
-        </div>
-      </div>
-      <div class="blog-card reveal">
-        <div class="blog-img">🎞️</div>
-        <div class="blog-content">
-          <p class="blog-tag">Film &amp; Slides</p>
-          <h3>The Best Negative &amp; Slide Scanners (2025)</h3>
-          <p>The FastFoto handles prints only. Here's what to use for 35mm film, slides, and negatives.</p>
-          <a href="#">Read the Guide →</a>
-        </div>
-      </div>
-      <div class="blog-card reveal">
-        <div class="blog-img">💾</div>
-        <div class="blog-content">
-          <p class="blog-tag">Storage</p>
-          <h3>The 3-2-1 Backup Rule for Your Digital Photos</h3>
-          <p>Scanning is just step one. Here's how to store your files so they truly last forever.</p>
-          <a href="#">Read the Guide →</a>
-        </div>
-      </div>
+    <p class="section-intro">We've done the research so you don't have to. Deep guides on getting the most from your photo digitization project — refreshed weekly.</p>
+    <div class="blog-grid" id="blog-rotation">
+      <!-- Populated by weekly rotation script below -->
     </div>
-
-    <!-- More topics teaser -->
-    <div style="margin-top:3rem; padding:2rem; border:1px solid var(--border); background:var(--warm-white);">
-      <p class="section-label" style="margin-bottom:0.5rem;">Coming Soon</p>
-      <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1rem;">
-        <span style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; padding:0.4rem 0.9rem; border:1px solid var(--border); color:var(--muted);">300 vs 600 DPI: What You Actually Need</span>
-        <span style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; padding:0.4rem 0.9rem; border:1px solid var(--border); color:var(--muted);">Epson FastFoto vs. ScanSnap iX1600</span>
-        <span style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; padding:0.4rem 0.9rem; border:1px solid var(--border); color:var(--muted);">How to Clean Your Photo Scanner</span>
-        <span style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; padding:0.4rem 0.9rem; border:1px solid var(--border); color:var(--muted);">Best Cloud Storage for Scanned Photos</span>
-        <span style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; padding:0.4rem 0.9rem; border:1px solid var(--border); color:var(--muted);">Scanning Polaroids: Tips &amp; Settings</span>
-      </div>
+    <div style="margin-top:2.5rem; text-align:center;">
+      <a href="blogs/blogs.html" style="display:inline-block; font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.85rem 2.25rem; border:2px solid var(--amber); color:var(--amber); text-decoration:none; transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='var(--amber)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='var(--amber)'">Browse All 30 Guides →</a>
     </div>
   </section>
 
@@ -1209,11 +1174,12 @@
     <div>
       <h4>Guides</h4>
       <ul>
-        <li><a href="#">How to Digitize 1,000 Photos</a></li>
-        <li><a href="#">Best Settings for the FastFoto</a></li>
-        <li><a href="#">Negative &amp; Slide Scanners</a></li>
-        <li><a href="#">3-2-1 Backup Strategy</a></li>
-        <li><a href="#">300 vs 600 DPI Explained</a></li>
+        <li><a href="blogs/blog-01.html">How to Digitize 1,000 Photos</a></li>
+        <li><a href="blogs/blog-24.html">Best Settings for the FastFoto</a></li>
+        <li><a href="blogs/blog-10.html">Negative &amp; Slide Scanners</a></li>
+        <li><a href="blogs/blog-05.html">3-2-1 Backup Strategy</a></li>
+        <li><a href="blogs/blog-03.html">300 vs 600 DPI Explained</a></li>
+        <li><a href="blogs/blogs.html">All 30 Guides →</a></li>
       </ul>
     </div>
     <div>
@@ -1228,27 +1194,92 @@
   </footer>
 
   <script>
-    // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(q => {
-      q.addEventListener('click', () => {
-        const item = q.parentElement;
-        const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    // ── BLOG ROTATION DATA ─────────────────────────────────────────────────
+    // Add new blogs here as you publish them. The rotation system handles the rest.
+    const BLOG_DATA = [
+      { url:'blogs/blog-01.html', title:'How to Digitize 1,000 Old Photos in a Weekend',           desc:'A step-by-step plan to digitize 1,000 old family photos in a single weekend using the Epson FastFoto FF-680W.',                    tag:'Complete Guide',   icon:'📸' },
+      { url:'blogs/blog-02.html', title:'Best Photo Scanner 2025: Epson FastFoto FF-680W Review',   desc:'In-depth review with speed tests, image quality, software, and honest pros and cons for digitizing old photos.',                   tag:'Scanner Review',   icon:'⭐' },
+      { url:'blogs/blog-03.html', title:'300 DPI vs 600 DPI: Best Setting for Old Photos',          desc:'The real differences in quality, file size, and when each scan resolution setting actually matters most.',                         tag:'Settings Guide',   icon:'🔍' },
+      { url:'blogs/blog-04.html', title:'How to Scan Polaroid Photos Without Damaging Them',        desc:'Safely digitize Polaroid instant photos using flatbed scanners and carrier sheets without scratching or bending.',                  tag:'Scanning Tips',    icon:'📷' },
+      { url:'blogs/blog-05.html', title:'3-2-1 Backup Rule: Store Digital Photos Forever',          desc:'Three copies, two media types, one offsite — the proven backup strategy for protecting scanned family photos.',                   tag:'Storage & Backup', icon:'💾' },
+      { url:'blogs/blog-06.html', title:'Flatbed vs Sheet-Fed Scanners for Photo Collections',      desc:'Compare speed, quality, price, and best use cases to choose the right scanner for your digitization project.',                     tag:'Equipment Guide',  icon:'🖥️' },
+      { url:'blogs/blog-07.html', title:'How to Organize Old Photos Before Scanning',               desc:'Sorting methods, labeling tips, and a pre-scan workflow that saves hours of post-processing time.',                                tag:'Organization',     icon:'📂' },
+      { url:'blogs/blog-08.html', title:'Best External Hard Drives for Photo Storage 2025',         desc:'The best external hard drives and SSDs for storing scanned family photos — capacity, durability, and speed compared.',             tag:'Storage & Backup', icon:'💿' },
+      { url:'blogs/blog-09.html', title:'How to Restore Faded Color Photos: Free & Paid Tools',     desc:'Restore faded family photos with free and paid tools — fix color shifts, exposure, and age damage step by step.',                 tag:'Photo Restoration', icon:'🎨' },
+      { url:'blogs/blog-10.html', title:'Scanning Negatives and Slides: Beginner\'s Guide',         desc:'Complete guide to scanning 35mm negatives and slides at home — equipment, settings, and step-by-step instructions.',               tag:'Film & Slides',    icon:'🎞️' },
+      { url:'blogs/blog-11.html', title:'How to Digitize Old VHS Tapes With Your Photos',           desc:'Complete guide to converting old VHS tapes to digital alongside your photo scanning project.',                                     tag:'VHS & Video',      icon:'📼' },
+      { url:'blogs/blog-12.html', title:'Why Your Old Family Photos Are Fading & How to Stop It',   desc:'The science behind photo fading and the practical steps to slow degradation and preserve your memories.',                          tag:'Preservation',     icon:'⏳' },
+      { url:'blogs/blog-13.html', title:'Best Way to Back Up Photos to the Cloud in 2025',          desc:'Google Photos, iCloud, Amazon Photos, and Backblaze reviewed for photo archiving and cloud backup.',                              tag:'Cloud Storage',    icon:'☁️' },
+      { url:'blogs/blog-14.html', title:'How to Scan Photos to USB: Step-by-Step Guide',            desc:'Step-by-step instructions for scanning old photos directly to a USB flash drive with proper folder structure.',                    tag:'How-To Guide',     icon:'🔌' },
+      { url:'blogs/blog-15.html', title:'Epson FastFoto FF-680W vs Fujitsu ScanSnap iX1600',        desc:'Head-to-head comparison for photo scanning — speed, quality, features, and value. Which one wins?',                               tag:'Comparison',       icon:'⚖️' },
+      { url:'blogs/blog-16.html', title:'How to Clean Your Photo Scanner for Best Results',         desc:'Keep your scanner producing streak-free, dust-free scans with this complete step-by-step cleaning guide.',                         tag:'Maintenance',      icon:'🧹' },
+      { url:'blogs/blog-17.html', title:'What Is M-Disc? 1,000-Year Archival Storage Explained',    desc:'M-Disc uses rock-like media for permanent data storage lasting 1,000 years — when to use it and how it fits your plan.',           tag:'Storage & Backup', icon:'💿' },
+      { url:'blogs/blog-18.html', title:'How to Scan Old Documents, Letters & Newspaper Clippings', desc:'Digitize fragile family documents, handwritten letters, and newspaper clippings safely with the right settings.',                  tag:'Documents',        icon:'📄' },
+      { url:'blogs/blog-19.html', title:'Photo Digitization for Beginners: Complete Guide',         desc:'Everything you need — equipment, settings, workflow, and storage — to digitize your first batch of family photos.',                tag:'Beginner\'s Guide', icon:'🌟' },
+      { url:'blogs/blog-20.html', title:'How to Create a Digital Photo Album for the Family',       desc:'Build a beautiful digital photo album the whole family can enjoy — tools, organization tips, and sharing methods.',                tag:'Digital Albums',   icon:'📚' },
+      { url:'blogs/blog-21.html', title:'Best Photo Scanners Under $200 in 2025',                   desc:'Budget flatbed and sheet-fed scanners compared with honest pros and cons for digitizing family photos affordably.',                tag:'Budget Picks',     icon:'💰' },
+      { url:'blogs/blog-22.html', title:'How Long Do Photo Prints Last? The Science Explained',     desc:'How long color and black-and-white prints last, what causes degradation, and how to maximize their lifespan.',                    tag:'Photo Science',    icon:'🔬' },
+      { url:'blogs/blog-23.html', title:'How to Scan and Restore Black and White Photos',           desc:'Settings, techniques, and software for digitizing and restoring monochrome family prints to their original beauty.',               tag:'Restoration',      icon:'🎞️' },
+      { url:'blogs/blog-24.html', title:'How to Use Epson FastFoto Software: Step-by-Step',         desc:'Master the Epson FastFoto software — batch scanning, color restoration, file naming, and dual-sided scanning explained.',          tag:'Software Guide',   icon:'🖥️' },
+      { url:'blogs/blog-25.html', title:'How to Share Digitized Family Photos with Relatives',      desc:'Cloud albums, USB drives, email, and printed options compared for sharing scanned family photos with loved ones.',                 tag:'Sharing',          icon:'🤝' },
+      { url:'blogs/blog-26.html', title:'How to Store Scanned Photos on a NAS Drive',              desc:'Setup guide, best NAS for photos, remote access, and how NAS fits into your family photo backup strategy.',                       tag:'NAS Storage',      icon:'🌐' },
+      { url:'blogs/blog-27.html', title:'Fireproof Safes for Photo Storage: Are They Worth It?',    desc:'Fire ratings, media protection, and what to look for when buying a safe to protect your photos and backup drives.',               tag:'Storage & Backup', icon:'🔒' },
+      { url:'blogs/blog-28.html', title:'How to Scan a Large Photo Collection on a Budget',         desc:'Budget strategies, free tools, and smart shortcuts for digitizing thousands of old family photos without overspending.',            tag:'Budget Guide',     icon:'💰' },
+      { url:'blogs/blog-29.html', title:'What Happens to Photos in a House Fire or Flood?',         desc:'The science of photo damage from fire and flood — and the backup strategies that protect your memories from disaster.',             tag:'Preservation',     icon:'🔥' },
+      { url:'blogs/blog-30.html', title:'How to Print Restored Digital Photos at Home',             desc:'Printer settings, paper choices, color management, and sizing tips for beautifully reprinting old restored photos.',               tag:'Printing',         icon:'🖨️' },
+    ];
+
+    // ── WEEKLY ROTATION ────────────────────────────────────────────────────
+    // Epoch: April 13, 2026. Advances by 1 every 7 days.
+    // Displays blogs[week%n], blogs[(week+1)%n], blogs[(week+2)%n].
+    // To add more blogs: push entries to BLOG_DATA above — nothing else changes.
+    const ROTATION_EPOCH = new Date('2026-04-13T00:00:00');
+
+    function getCurrentWeek() {
+      return Math.max(0, Math.floor((Date.now() - ROTATION_EPOCH.getTime()) / (7 * 24 * 60 * 60 * 1000)));
+    }
+
+    function renderBlogs() {
+      const week = getCurrentWeek();
+      const n = BLOG_DATA.length;
+      const slots = [week % n, (week + 1) % n, (week + 2) % n];
+      document.getElementById('blog-rotation').innerHTML = slots.map(function(i) {
+        var b = BLOG_DATA[i];
+        return '<article class="blog-card reveal">' +
+          '<div class="blog-img">' + b.icon + '</div>' +
+          '<div class="blog-content">' +
+            '<p class="blog-tag">' + b.tag + '</p>' +
+            '<h3>' + b.title + '</h3>' +
+            '<p>' + b.desc + '</p>' +
+            '<a href="' + b.url + '">Read the Guide \u2192</a>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+    }
+
+    // Render blogs before setting up the scroll observer so new cards are captured
+    renderBlogs();
+
+    // ── FAQ ACCORDION ──────────────────────────────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(function(q) {
+      q.addEventListener('click', function() {
+        var item = q.parentElement;
+        var wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
         if (!wasOpen) item.classList.add('open');
       });
     });
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
+    // ── SCROLL REVEAL ──────────────────────────────────────────────────────
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry, i) {
         if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
   </script>
 
 </body>
